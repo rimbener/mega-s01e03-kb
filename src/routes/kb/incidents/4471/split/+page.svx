@@ -1,0 +1,61 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: Hernán Laura
+status: open
+reviewed: 2026-10-31
+signature: Hernán Laura
+filed:
+  parser: ISSUE_PARSER
+  hint: ISSUE_HINT
+  one-day: ISSUE_ONEDAY
+---
+
+<script>
+  import ProblemSplit from '#lib/kb/ProblemSplit.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+[#4471](/kb/incidents/4471) says one issue, one fix queued. Its own cause table already shows a
+second cause with no ticket, and a footnote about reports that do not fit either. Read report by
+report, the ticket holds **three problems**. Each one now has its own ticket.
+
+<Callout kind="warn">
+The queued parser fix closes only the first row. The other two keep coming in after it ships.
+</Callout>
+
+## What the reports show
+
+<ProblemSplit ticket={4471} {filed} />
+
+The counts above are computed from `reports-4471.json` at render time, with duplicate export rows
+removed by id. If the desk merges more reports, the table follows.
+
+## The three problems
+
+**`parser` — the shared parser reads every date month first.** A day-first tenant books 7 April
+and the invite says 4 July. Day and month swap, so it only happens when the day is 12 or less. Every
+tenant on file writes the day first. This is what #4471 describes, and the queued fix is for this.
+
+**`hint` — booking-v3's form tells people to type month first.** Its date field prints
+`MM/DD/YYYY`, people type what it says, and the form then reads the date the tenant's way, day
+first. The report looks exactly like a parser report: a swapped day and month. It comes only through
+the `form` channel of booking-v3 tenants. Fixing the parser does not touch it. Intake's tag does not
+tell the two apart; it guesses from the browser, so go by tenant, form and channel
+(`causeOf` in `src/lib/kb/causes.ts` does this).
+
+**`one-day` — the date moves by one day, the month stays right.** Tuesday shows as Monday; a client
+in Lisbon gets Tuesday and one in Toronto gets Monday for the same meeting; an invite arrives before
+the booking; "every booking in June is one day off". That is a date shifted across a time zone or a
+DST change, not a swapped day and month. #4471's table files these under `parser` by tenant and
+footnotes them. The parser fix will not move them back.
+
+## For the desk
+
+- Do not close #4471 on the parser fix alone. Check the `hint` and `one-day` rows first.
+- A swapped date from a booking-v3 tenant's form is `hint`, whatever intake tagged it.
+- A date off by exactly one day is `one-day`. Do not merge it into a swap ticket because the subject
+  says "wrong day": subjects match across all three problems.
+
+<RenderStamp {signature} />
