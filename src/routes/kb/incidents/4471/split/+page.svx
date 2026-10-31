@@ -4,7 +4,7 @@ title: '#4471 · three problems, not one'
 owner: Hernán Laura
 status: open
 reviewed: 2026-10-31
-signature: Hernán Laura
+signature: 'v1.eyJzdWIiOiIzODUyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTM0NjEyMDEsImV4cCI6MTc5MzU0NzYwMX0.Ss5z0SF8QUj0UMnSbTz82rOicRT48aKwpZ5yz4DU5gs'
 filed:
   parser: https://github.com/rimbener/mega-s01e03-kb/issues/1
   hint: https://github.com/rimbener/mega-s01e03-kb/issues/2
