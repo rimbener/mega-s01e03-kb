@@ -6,9 +6,9 @@ status: open
 reviewed: 2026-10-31
 signature: Hernán Laura
 filed:
-  parser: ISSUE_PARSER
-  hint: ISSUE_HINT
-  one-day: ISSUE_ONEDAY
+  parser: https://github.com/rimbener/mega-s01e03-kb/issues/1
+  hint: https://github.com/rimbener/mega-s01e03-kb/issues/2
+  one-day: https://github.com/rimbener/mega-s01e03-kb/issues/3
 ---
 
 <script>
